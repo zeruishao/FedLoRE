@@ -25,29 +25,6 @@ def train_model(args, i):
     server.train()
 
 
-# Training argparse
-def args_parser():
-    parser = argparse.ArgumentParser()
-
-    parser.add_argument('-algo', "--algorithm", type=str, default="FedLoRE")
-    parser.add_argument('-data', "--dataset", type=str, default="Cifar100", choices=["Cifar10", "Cifar100"])
-    parser.add_argument('-nb', "--num_classes", type=int, default=100, choices=["10", "100"])
-    parser.add_argument('-nc', "--num_clients", type=int, default=100, help="Total number of clients")
-    parser.add_argument('-m', "--model", type=str, default="cnn")
-    parser.add_argument('-gr', "--global_rounds", type=int, default=150, help="Total number of communication rounds")
-    parser.add_argument('-ls', "--local_epochs", type=int, default=5, help="Multiple update steps in one local epoch")
-    parser.add_argument('-lbs', "--batch_size", type=int, default=256, help="Batch size for local training")
-    parser.add_argument('-lr', "--local_learning_rate", type=float, default=0.01, help="Local learning rate")
-    parser.add_argument('-pv', "--prev", type=int, default=0, help="Previous Running times")
-    parser.add_argument('-t', "--times", type=int, default=5, help="Running times")
-    parser.add_argument('-dev', "--device", type=str, default="cuda", choices=["cpu", "cuda"])
-    parser.add_argument('-did', "--device_id", type=str, default="0")
-    parser.add_argument('-prd', "--pre_round", type=int, default=5, help="Achieve the smooth training process")
-    parser.add_argument('-rank', "--rank", type=int, default=5, help="Low-rank component estimation parameter")
-
-    return parser.parse_args()
-
-
 # Explain argparse
 def exp_details(args):
     if args.device == "cuda" and not torch.cuda.is_available():
@@ -87,6 +64,32 @@ def run(args):
 
 
 if __name__ == "__main__":
-    args = args_parser()
-    os.environ["CUDA_VISIBLE_DEVICES"] = args.device_id
-    run(args)
+    try:
+        # Training argparse
+        parser = argparse.ArgumentParser()
+
+        parser.add_argument('-algo', "--algorithm", type=str, default="FedLoRE")
+        parser.add_argument('-data', "--dataset", type=str, default="Cifar100", choices=["Cifar10", "Cifar100"])
+        parser.add_argument('-nb', "--num_classes", type=int, default=100, help="Total number of classes")
+        parser.add_argument('-nc', "--num_clients", type=int, default=100, help="Total number of clients")
+        parser.add_argument('-m', "--model", type=str, default="cnn")
+        parser.add_argument('-gr', "--global_rounds", type=int, default=150, help="Total number of communication rounds")
+        parser.add_argument('-ls', "--local_epochs", type=int, default=5, help="Multiple update steps in one local epoch")
+        parser.add_argument('-lbs', "--batch_size", type=int, default=256, help="Batch size for local training")
+        parser.add_argument('-lr', "--local_learning_rate", type=float, default=0.01, help="Local learning rate")
+        parser.add_argument('-pv', "--prev", type=int, default=0, help="Previous Running times")
+        parser.add_argument('-t', "--times", type=int, default=3, help="Running times")
+        parser.add_argument('-dev', "--device", type=str, default="cuda", choices=["cpu", "cuda"])
+        parser.add_argument('-did', "--device_id", type=str, default="0")
+        parser.add_argument('-prd', "--pre_round", type=int, default=5, help="Achieve the smooth training process")
+        parser.add_argument('-rank', "--rank", type=int, default=5, help="Low-rank component estimation parameter")
+
+        args = parser.parse_args()
+
+        os.environ["CUDA_VISIBLE_DEVICES"] = args.device_id
+
+        # Training
+        run(args)
+        
+    except Exception as exp:
+        print(exp)
