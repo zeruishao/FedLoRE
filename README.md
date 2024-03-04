@@ -17,12 +17,12 @@ conda install scikit-learn
 ## Run Experiments
 There is a main file `main.py` which allows running next experiments.
 
-Run experiments on the CIFAR10 dataset, there are 100 Non-IID clients to train the CNN model collaboratively.:
+Run experiments on the CIFAR10 dataset, there are 100 Non-IID clients to train the CNN model collaboratively:
 ```bash
    python main.py --algorithm FedLoRE --dataset Cifar10 --num_classes 10 --num_clients 100
 ```
 
-Run experiments on the CIFAR100 dataset, there are 100 Non-IID clients to train the CNN model collaboratively.:
+Run experiments on the CIFAR100 dataset, there are 100 Non-IID clients to train the CNN model collaboratively:
 ```bash
    python main.py --algorithm FedLoRE --dataset Cifar100 --num_classes 100 --num_clients 100
 ```
