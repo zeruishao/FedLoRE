@@ -1,6 +1,6 @@
 # FedLoRE
 
-This is the demo implementation of "FedLoRE: Communication-Efficient and Personalized Edge Intelligence Framework via Federated Low-Rank Estimation" (under review), the full version of this code with other comparison frameworks will be available soon.
+This is the demo implementation of "FedLoRE: Communication-Efficient and Personalized Edge Intelligence Framework via Federated Low-Rank Estimation" (under review), the final version of this code with other comparison frameworks will be available soon.
 
 ## Requirements
 Please run the following commands below to install dependencies.
